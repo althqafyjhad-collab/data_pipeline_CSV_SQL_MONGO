@@ -3,7 +3,7 @@ db.py - PostgreSQL connection and data loading utilities
 ========================================================
 
 This module encapsulates everything related to connecting to the
-PostgreSQL database `university_tranining` and reading data from
+PostgreSQL database `advanced_sql_training_db` and reading data from
 its tables (e.g. `students`).
 
 Two connection strategies are provided so the learner can compare:
@@ -38,7 +38,7 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 DB_CONFIG: Dict[str, str] = {
     "host": os.getenv("PGHOST", "localhost"),
     "port": os.getenv("PGPORT", "5432"),
-    "dbname": os.getenv("PGDATABASE", "university_tranining"),
+    "dbname": os.getenv("PGDATABASE", "advanced_sql_training_db"),
     "user": os.getenv("PGUSER", "postgres"),
     "password": os.getenv("PGPASSWORD", "postgres"),
 }
@@ -60,6 +60,40 @@ GROUP BY
     s.full_name,
     c.course_id,
     c.course_name
+"""
+
+# Per-student summary used for ML feature engineering
+# (average score across all assessments, counts of enrollments).
+STUDENT_SUMMARY_QUERY = """
+SELECT
+    s.student_id,
+    s.full_name,
+    s.gender,
+    s.city,
+    s.enrollment_year,
+    s.status,
+    COUNT(DISTINCT e.course_id)                AS total_courses,
+    COUNT(DISTINCT CASE
+        WHEN e.enrollment_status = 'Completed'
+        THEN e.course_id
+    END)                                       AS completed_courses,
+    ROUND(
+        AVG(a.score) FILTER (WHERE a.score IS NOT NULL),
+        2
+    )                                          AS average_score
+FROM students s
+LEFT JOIN enrollments e
+    ON e.student_id = s.student_id
+LEFT JOIN assessments a
+    ON a.student_id = s.student_id
+    AND a.course_id = e.course_id
+GROUP BY
+    s.student_id,
+    s.full_name,
+    s.gender,
+    s.city,
+    s.enrollment_year,
+    s.status
 """
 
 
@@ -205,11 +239,14 @@ def read_table_sqlalchemy(
     return pd.read_sql_query(query, engine)
 
 
-def read_query_sqlalchemy(query: str) -> pd.DataFrame:
+def read_query_sqlalchemy(
+    query: str,
+    engine: Optional[Engine] = None,
+) -> pd.DataFrame:
     """
     Run an arbitrary SQL SELECT and return the result as a DataFrame.
     """
-    engine = get_engine()
+    engine = engine or get_engine()
     return pd.read_sql_query(query, engine)
 
 
@@ -233,6 +270,17 @@ def run_pipeline_query(query: str = STUDENT_AVERAGE_QUERY) -> pd.DataFrame:
     Run the JOIN query that aggregates student averages per course.
     """
     return read_query_sqlalchemy(query)
+
+
+def load_student_summary(
+    engine: Optional[Engine] = None,
+) -> pd.DataFrame:
+    """
+    Load the per-student summary (features: total/completed courses,
+    average score, demographics) used for ML-ready feature engineering.
+    """
+    engine = engine or get_engine()
+    return read_query_sqlalchemy(STUDENT_SUMMARY_QUERY, engine)
 
 
 if __name__ == "__main__":

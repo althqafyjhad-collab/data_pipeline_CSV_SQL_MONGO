@@ -6,10 +6,11 @@ from db import (
     get_engine,
     ping_sqlalchemy,
     load_students_table,
+    load_student_summary,
 )
 
-# Names of the tables that exist in the PostgreSQL database
-# `university_tranining` (edit if your schema differs).
+# Name of the tables that exist in the PostgreSQL database
+# `advanced_sql_training_db` (edit if your schema differs).
 STUDENTS_TABLE = "students"
 
 RAW_FILE = Path("data/raw/students_raw.csv")
@@ -18,11 +19,12 @@ LOG_FILE = Path("logs/pipeline.log")
 
 REQUIRED_COLUMNS = {
     "student_id",
-    "name",
-    "age",
-    "gpa",
-    "attendance",
+    "full_name",
+    "gender",
+    "birth_date",
     "city",
+    "enrollment_year",
+    "status",
 }
 
 
@@ -50,7 +52,7 @@ def load_data(file_path: Path = RAW_FILE) -> pd.DataFrame:
     Load data into a pandas DataFrame.
 
     The primary source is the `students` table in the PostgreSQL
-    database `university_tranining`. The CSV file path is kept only
+    database `advanced_sql_training_db`. The CSV file path is kept only
     as a fallback when the database is not available.
     """
 
@@ -74,6 +76,14 @@ def load_data(file_path: Path = RAW_FILE) -> pd.DataFrame:
             raise ValueError(
                 "Students table is empty."
             )
+
+        # Merge per-student summary used for ML feature engineering.
+        summary = load_student_summary(engine)
+        df = df.merge(
+            summary.drop(columns=["full_name", "gender", "city"]),
+            on="student_id",
+            how="left",
+        )
 
         logger.info(
             f"Loaded {len(df)} rows and {len(df.columns)} columns "
@@ -142,13 +152,15 @@ def convert_data_types(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     numeric_columns = [
         "student_id",
-        "age", 
-        "gpa",
-        "attendance"
-        ]
+        "enrollment_year",
+        "total_courses",
+        "completed_courses",
+        "average_score",
+    ]
     for col in numeric_columns:
         df[col] = pd.to_numeric(df[col], errors="coerce")
 
+    df["birth_date"] = pd.to_datetime(df["birth_date"], errors="coerce")
 
     return df
 
@@ -186,8 +198,8 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     # Clean text fields
     # --------------------------------------------------
 
-    df["name"] = (
-        df["name"]
+    df["full_name"] = (
+        df["full_name"]
         .str.strip()
         .str.title()
     )
@@ -198,49 +210,34 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
         .str.title()
     )
 
-    # --------------------------------------------------
-    # Invalid GPA
-    # Valid range: 0 - 4
-    # --------------------------------------------------
+    df["gender"] = df["gender"].str.strip().str.upper()
 
-    df.loc[
-        ~df["gpa"].between(0.0, 4.0),
-        "gpa"
-    ] = pd.NA
+    df["status"] = df["status"].str.strip().str.title()
 
     # --------------------------------------------------
-    # Invalid Age
-    # Valid range: 16 - 80
+    # Normalize gender codes to readable labels
     # --------------------------------------------------
 
-    df.loc[
-        ~df["age"].between(16, 80),
-        "age"
-    ] = pd.NA
+    df.loc[df["gender"] == "M", "gender"] = "Male"
+    df.loc[df["gender"] == "F", "gender"] = "Female"
 
     # --------------------------------------------------
-    # Invalid Attendance
-    # Valid range: 0 - 100
+    # Keep only valid enrollment years (>= 1900)
     # --------------------------------------------------
 
     df.loc[
-        ~df["attendance"].between(0, 100),
-        "attendance"
+        ~df["enrollment_year"].between(1900, 2100),
+        "enrollment_year"
     ] = pd.NA
 
     # --------------------------------------------------
-    # Fill missing numeric values with median
+    # Cap average_score to the valid 0 - 100 range
     # --------------------------------------------------
 
-    for column in [
-        "age",
-        "gpa",
-        "attendance"
-    ]:
-
-        df[column] = df[column].fillna(
-            df[column].median()
-        )
+    df.loc[
+        ~df["average_score"].between(0, 100),
+        "average_score"
+    ] = pd.NA
 
     # --------------------------------------------------
     # Logging
@@ -269,14 +266,16 @@ def validate_data(df: pd.DataFrame) -> None:
         errors.append("student_id contains values NULL.")
     if df["student_id"].duplicated().any():
         errors.append("student_id is not unique.")
-    if not df["age"].between(16,80).all():
-        errors.append("Invalid age values.")
-    if df["name"].isnull().any():
-        errors.append("name contains NULL values.")
-    if not df["gpa"].between(0.0, 4.0).all():
-        errors.append("Invalid gpa values.")
-    if not df["attendance"].between(0, 100).all():
-        errors.append("Invalid attendance values.")
+    if df["full_name"].isnull().any():
+        errors.append("full_name contains NULL values.")
+    if df["gender"].isnull().any():
+        errors.append("gender contains NULL values.")
+    if df["birth_date"].isnull().any():
+        errors.append("birth_date contains NULL values.")
+    if df["enrollment_year"].isnull().any():
+        errors.append("enrollment_year contains NULL values.")
+    if not df["enrollment_year"].between(1900, 2100).all():
+        errors.append("Invalid enrollment_year values.")
     if errors:
         raise ValueError("Data validation errors:\n " + "\n "
         .join(f"- {error}" for error in errors))
