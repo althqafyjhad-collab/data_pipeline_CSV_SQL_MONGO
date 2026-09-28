@@ -28,3 +28,8 @@ data/processed/
 Thumbs.db
 .idea/
 .vscode/
+
+# =====================
+# Markdown docs (keep local, not in repo)
+# =====================
+*.md
