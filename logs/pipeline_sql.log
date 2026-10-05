@@ -92,3 +92,31 @@
 2026-10-05 17:31:45,321 | INFO | [validate] final data is valid.
 2026-10-05 17:31:45,328 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
 2026-10-05 17:31:45,328 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:48:34,935 | INFO | SQL pipeline started.
+2026-10-05 17:48:35,150 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:48:35,150 | INFO | [schema] validation passed.
+2026-10-05 17:48:35,156 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:48:35,157 | INFO | [validate] final data is valid.
+2026-10-05 17:48:35,161 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:48:35,161 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:50:17,155 | INFO | SQL pipeline started.
+2026-10-05 17:50:17,414 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:50:17,414 | INFO | [schema] validation passed.
+2026-10-05 17:50:17,421 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:50:17,421 | INFO | [validate] final data is valid.
+2026-10-05 17:50:17,424 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:50:17,424 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:53:37,951 | INFO | SQL pipeline started.
+2026-10-05 17:53:38,252 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:53:38,255 | INFO | [schema] validation passed.
+2026-10-05 17:53:38,264 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:53:38,265 | INFO | [validate] final data is valid.
+2026-10-05 17:53:38,269 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:53:38,270 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:53:48,264 | INFO | SQL pipeline started.
+2026-10-05 17:53:48,444 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:53:48,444 | INFO | [schema] validation passed.
+2026-10-05 17:53:48,450 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:53:48,451 | INFO | [validate] final data is valid.
+2026-10-05 17:53:48,453 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:53:48,453 | INFO | SQL pipeline completed successfully.

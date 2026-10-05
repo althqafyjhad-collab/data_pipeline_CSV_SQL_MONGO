@@ -8,8 +8,8 @@ Runs the three independent stages in order:
 
 Usage
 -----
-    python src/pipelines/csv/pipeline.py             # normal run
-    python src/pipelines/csv/pipeline.py --verbose   # show the data
+    python src/pipelines/csv/pipeline.py           # shows the data
+    python src/pipelines/csv/pipeline.py --quiet   # outcome only
 """
 
 import argparse
@@ -46,9 +46,9 @@ def parse_args(argv=None) -> argparse.Namespace:
         description="Run the CSV student pipeline."
     )
     parser.add_argument(
-        "--verbose",
+        "--quiet",
         action="store_true",
-        help="Print the input and the processed data to the console.",
+        help="Hide the data previews and only report the outcome.",
     )
     return parser.parse_args(argv)
 
@@ -56,7 +56,7 @@ def parse_args(argv=None) -> argparse.Namespace:
 def run_csv_pipeline(
     input_file: Path = CSV_INPUT_FILE,
     output_file: Path = CSV_OUTPUT_FILE,
-    verbose: bool = False,
+    verbose: bool = True,
 ) -> pd.DataFrame:
     """
     Execute the CSV pipeline end to end and return the final DataFrame.
@@ -118,4 +118,4 @@ def run_csv_pipeline(
 
 if __name__ == "__main__":
     options = parse_args()
-    run_csv_pipeline(verbose=options.verbose)
+    run_csv_pipeline(verbose=not options.quiet)

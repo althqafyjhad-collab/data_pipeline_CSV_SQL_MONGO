@@ -198,21 +198,31 @@ python src/pipelines/mongo/pipeline.py
 python run_all.py
 ```
 
-### 5.5 عرض البيانات في الكونسول (`--verbose`)
+### 5.5 عرض البيانات في الكونسول
 
-أضف `--verbose` لعرض المدخلات والمخرجات مباشرة في الكونسول:
+عرض البيانات في الكونسول هو **الوضع الافتراضي**، فلا حاجة إلى أي معيار إضافي:
 
 ```powershell
 # خط واحد فقط
-python src/pipelines/csv/pipeline.py --verbose
-python src/pipelines/sql/pipeline.py --verbose
-python src/pipelines/mongo/pipeline.py --verbose
+python src/pipelines/csv/pipeline.py
+python src/pipelines/sql/pipeline.py
+python src/pipelines/mongo/pipeline.py
 
 # كل الخطوط معًا
-python run_all.py --verbose
+python run_all.py
 ```
 
-**مثال من وضع `--verbose` لخط CSV:**
+لإخفاء البيانات وعرض النتيجة فقط، أضف `--quiet`:
+
+```powershell
+python run_all.py --quiet
+python src/pipelines/csv/pipeline.py --quiet
+```
+
+> السجلات التفصيلية لا تظهر في الكونسول إطلاقًا؛ تُكتب في ملفات `logs/*.log`.
+> لذلك لا يختلط الإخراج بالبيانات.
+
+**مثال من مخرجات خط CSV:**
 
 ```
 ============================================================
@@ -250,7 +260,7 @@ rows written: 100
 saved to    : ...\data\processed\students_ml_ready.csv
 ```
 
-**ما يعرضه `--verbose`:** كل خطوة على حدة:
+**ما يُعرض في الكونسول:** كل خطوة على حدة:
 - `INPUT` — البيانات الخام كما قُرئت من المصدر
 - `AFTER TYPE CONVERSION` — بعد تحويل الأنواع
 - `AFTER CLEANING` — بعد إزالة التكرارات وتصحيح القيم

@@ -8,8 +8,8 @@ Runs the three independent stages in order:
 
 Usage
 -----
-    python src/pipelines/mongo/pipeline.py             # normal run
-    python src/pipelines/mongo/pipeline.py --verbose   # show the data
+    python src/pipelines/mongo/pipeline.py           # shows the data
+    python src/pipelines/mongo/pipeline.py --quiet   # outcome only
 """
 
 import argparse
@@ -41,16 +41,16 @@ def parse_args(argv=None) -> argparse.Namespace:
         description="Run the MongoDB student pipeline."
     )
     parser.add_argument(
-        "--verbose",
+        "--quiet",
         action="store_true",
-        help="Print the documents read from MongoDB and the result.",
+        help="Hide the data previews and only report the outcome.",
     )
     return parser.parse_args(argv)
 
 
 def run_mongo_pipeline(
     output_file: Path = MONGO_OUTPUT_FILE,
-    verbose: bool = False,
+    verbose: bool = True,
 ) -> pd.DataFrame:
     """
     Execute the Mongo pipeline end to end and return the final DataFrame.
@@ -119,4 +119,4 @@ def run_mongo_pipeline(
 
 if __name__ == "__main__":
     options = parse_args()
-    run_mongo_pipeline(verbose=options.verbose)
+    run_mongo_pipeline(verbose=not options.quiet)

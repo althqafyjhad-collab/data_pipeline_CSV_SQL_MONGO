@@ -2,8 +2,8 @@
 display.py - Console preview of DataFrames.
 =========================================
 
-Provides a small helper used by every pipeline when it runs with the
-`--verbose` flag.
+Provides a small helper used by every pipeline unless it is run with
+the `--quiet` flag.
 
 It prints a readable preview of the data *before* and *after*
 processing, so the effect of the cleaning stage is visible directly in

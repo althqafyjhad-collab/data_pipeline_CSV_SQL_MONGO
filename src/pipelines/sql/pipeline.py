@@ -8,8 +8,8 @@ Runs the three independent stages in order:
 
 Usage
 -----
-    python src/pipelines/sql/pipeline.py             # normal run
-    python src/pipelines/sql/pipeline.py --verbose   # show the data
+    python src/pipelines/sql/pipeline.py           # shows the data
+    python src/pipelines/sql/pipeline.py --quiet   # outcome only
 """
 
 import argparse
@@ -40,16 +40,16 @@ def parse_args(argv=None) -> argparse.Namespace:
         description="Run the PostgreSQL student pipeline."
     )
     parser.add_argument(
-        "--verbose",
+        "--quiet",
         action="store_true",
-        help="Print the data read from the database and the result.",
+        help="Hide the data previews and only report the outcome.",
     )
     return parser.parse_args(argv)
 
 
 def run_sql_pipeline(
     output_file: Path = SQL_OUTPUT_FILE,
-    verbose: bool = False,
+    verbose: bool = True,
 ) -> pd.DataFrame:
     """
     Execute the SQL pipeline end to end and return the final DataFrame.
@@ -117,4 +117,4 @@ def run_sql_pipeline(
 
 if __name__ == "__main__":
     options = parse_args()
-    run_sql_pipeline(verbose=options.verbose)
+    run_sql_pipeline(verbose=not options.quiet)

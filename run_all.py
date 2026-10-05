@@ -4,14 +4,14 @@ run_all.py - Run every pipeline from a single command.
 
 Usage
 -----
-    python run_all.py             # normal run (logs only)
-    python run_all.py --verbose   # show all inputs and outputs
+    python run_all.py             # default: shows all inputs and outputs
+    python run_all.py --quiet     # only the outcome of each pipeline
 
 Each pipeline is still independent and can be run on its own:
 
-    python src/pipelines/csv/pipeline.py   [--verbose]
-    python src/pipelines/sql/pipeline.py   [--verbose]
-    python src/pipelines/mongo/pipeline.py [--verbose]
+    python src/pipelines/csv/pipeline.py   [--quiet]
+    python src/pipelines/sql/pipeline.py   [--quiet]
+    python src/pipelines/mongo/pipeline.py [--quiet]
 """
 
 import argparse
@@ -31,14 +31,14 @@ def parse_args(argv=None) -> argparse.Namespace:
         description="Run every student data pipeline."
     )
     parser.add_argument(
-        "--verbose",
+        "--quiet",
         action="store_true",
-        help="Print the input and the processed data of every pipeline.",
+        help="Hide the data previews and only report the outcome.",
     )
     return parser.parse_args(argv)
 
 
-def main(verbose: bool = False) -> None:
+def main(verbose: bool = True) -> None:
     """Run the three pipelines in order."""
     for title, runner in (
         ("CSV pipeline", run_csv_pipeline),
@@ -56,4 +56,4 @@ def main(verbose: bool = False) -> None:
 
 if __name__ == "__main__":
     options = parse_args()
-    main(verbose=options.verbose)
+    main(verbose=not options.quiet)
