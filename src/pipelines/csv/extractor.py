@@ -10,7 +10,14 @@ its own module.
 """
 
 import logging
+import sys
 from pathlib import Path
+
+# Allow running this file directly from the project root.
+sys.path.insert(
+    0,
+    str(Path(__file__).resolve().parents[2]),
+)
 
 import pandas as pd
 

@@ -9,7 +9,15 @@ No cleaning, no validation and no writing happen here.
 """
 
 import logging
+import sys
+from pathlib import Path
 from typing import Optional
+
+# Allow running this file directly from the project root.
+sys.path.insert(
+    0,
+    str(Path(__file__).resolve().parents[2]),
+)
 
 import pandas as pd
 from pymongo import MongoClient
