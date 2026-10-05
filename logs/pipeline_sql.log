@@ -71,3 +71,24 @@
 2026-10-05 16:52:59,491 | INFO | [validate] final data is valid.
 2026-10-05 16:52:59,494 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
 2026-10-05 16:52:59,495 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:26:09,986 | INFO | SQL pipeline started.
+2026-10-05 17:26:10,316 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:26:10,317 | INFO | [schema] validation passed.
+2026-10-05 17:26:10,327 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:26:10,328 | INFO | [validate] final data is valid.
+2026-10-05 17:26:10,331 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:26:10,332 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:31:28,735 | INFO | SQL pipeline started.
+2026-10-05 17:31:28,984 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:31:28,984 | INFO | [schema] validation passed.
+2026-10-05 17:31:28,993 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:31:28,994 | INFO | [validate] final data is valid.
+2026-10-05 17:31:28,997 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:31:28,997 | INFO | SQL pipeline completed successfully.
+2026-10-05 17:31:44,972 | INFO | SQL pipeline started.
+2026-10-05 17:31:45,303 | INFO | [read] 100 rows x 10 columns from database
+2026-10-05 17:31:45,306 | INFO | [schema] validation passed.
+2026-10-05 17:31:45,320 | INFO | [clean] 100 rows x 10 columns after cleaning
+2026-10-05 17:31:45,321 | INFO | [validate] final data is valid.
+2026-10-05 17:31:45,328 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_sql_ml_ready.csv
+2026-10-05 17:31:45,328 | INFO | SQL pipeline completed successfully.
