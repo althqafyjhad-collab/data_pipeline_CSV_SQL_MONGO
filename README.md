@@ -1,0 +1,258 @@
+# Student Data Pipeline — Project Documentation
+
+> التوثيق الكامل للمشروع: البنية، خطوط المعالجة، طريقة التشغيل، وإدارة الاتصال بقاعدة البيانات.
+
+---
+
+## 1. نظرة عامة على المشروع
+
+المشروع يحوّل بيانات الطلاب إلى **مجموعات بيانات جاهزة لتعلّم الآلة (ML-Ready)**.
+المصدران مختلفان تمامًا، ولذلك فُصل كل مصدر في **خط معالجة مستقل**:
+
+| الخط | المصدر | عدد الصفوف | ملف الإخراج |
+|------|--------|-----------|-------------|
+| **CSV** | ملف `data/raw/students_raw.csv` | 8 | `data/processed/students_ml_ready.csv` |
+| **SQL** | PostgreSQL `advanced_sql_training_db` | 15 | `data/processed/students_sql_ml_ready.csv` |
+
+**لماذا الفصل؟**
+- المصدران لهما **أعمدة مختلفة تمامًا**؛ فرض نسخة واحدة عليهما ينتج كودًا هشًّا.
+- كل خط يعمل ويفشل بشكل مستقل دون التأثير على الآخر.
+- فصل القراءة عن المعالجة عن الإخراج يجعل كل وحدة **قابلة للاختبار وحدها**.
+
+---
+
+## 2. بنية المشروع
+
+```
+student_data_pipeline/
+├── run_all.py                     ← تشغيل الخطين بأمر واحد
+├── requirements.txt
+├── .env.example                   ← نموذج متغيرات البيئة
+├── data/
+│   ├── raw/
+│   │   └── students_raw.csv       ← مصدر خط CSV
+│   └── processed/                 ← المخرجات (git-ignored)
+├── logs/                          ← سجل مستقل لكل خط
+└── src/
+    ├── common/                    ← وحدات مشتركة بين الخطين
+    │   ├── paths.py               ← كل المسارات في مكان واحد
+    │   ├── logging_setup.py       ← إعداد السجل
+    │   └── schemas.py             ← قواعد التحقق لكل مصدر
+    └── pipelines/
+        ├── csv/
+        │   ├── extractor.py       ← [قراءة] من CSV فقط
+        │   ├── processor.py       ← [معالجة] تنظيف وتحويل وتحقق
+        │   ├── writer.py          ← [إخراج] حفظ في CSV فقط
+        │   └── pipeline.py        ← تنسيق المراحل الثلاث
+        └── sql/
+            ├── config.py          ← إعدادات الاتصال
+            ├── extractor.py       ← [قراءة] من PostgreSQL فقط
+            ├── processor.py       ← [معالجة]
+            ├── writer.py          ← [إخراج]
+            └── pipeline.py        ← تنسيق المراحل الثلاث
+```
+
+---
+
+## 3. مبدأ التصميم: فصل القراءة عن الإخراج
+
+كل خط موزّع على ثلاث وحدات مستقلة، ولكل وحدة **مسؤولية واحدة**:
+
+| الوحدة | المسؤولية | ما لا تفعله |
+|--------|-----------|-------------|
+| `extractor.py` | **القراءة فقط** من المصدر | لا ينظّف ولا يكتب |
+| `processor.py` | **المعالجة فقط** (تحويل، تنظيف، تحقق) | لا يقرأ من المصدر ولا يكتب |
+| `writer.py` | **الإخراج فقط** إلى الملف | لا يقرأ ولا ينظّف |
+
+### كيف يعمل هذا عمليًا؟
+
+الكود في `extractor.py` لا يعرف شيئًا عن CSV، فقط:
+```python
+df = pd.read_csv(file_path)   # قراءة
+return df                      # لا معالجة، لا كتابة
+```
+
+والكود في `writer.py` لا يعرف شيئًا عن قاعدة البيانات:
+```python
+df.to_csv(output_path, index=False)   # كتابة فقط
+```
+
+هذه الوحدات يمكن اختبارها واستبدالها منفردة دون لمس بقية الخط.
+
+---
+
+## 4. بيانات كل خط (Schemas)
+
+### 4.1 خط CSV — `data/raw/students_raw.csv`
+
+المدخل: `student_id, name, age, gpa, attendance, city` (6 أعمدة)
+
+المعالجة:
+1. حذف الصفوف المكرّرة و`student_id` المكرّر
+2. تنظيف المسافات وتوحيد حالة الأحرف في `name` و`city`
+3. **إبطال القيم خارج النطاق** → `gpa` (0–4)، `age` (16–80)، `attendance` (0–100)
+4. **ملء الفراغات بالوسيط (median)**
+5. تحقق نهائي من عدم وجود NULL أو تكرار
+
+المخرج: نفس الأعمدة الستة بعد التنظيف.
+
+### 4.2 خط SQL — قاعدة `advanced_sql_training_db`
+
+المدخل: جدول `students` مدمجًا مع استعلام ملخص لكل طالب.
+
+**استعلام الملخص** يجمع ميزات ML لكل طالب:
+```sql
+COUNT(DISTINCT e.course_id)                              AS total_courses,
+COUNT(DISTINCT CASE WHEN e.enrollment_status = 'Completed'
+    THEN e.course_id END)                                AS completed_courses,
+ROUND(AVG(a.score) FILTER (WHERE a.score IS NOT NULL), 2) AS average_score
+```
+> `FILTER (WHERE ...)` يتجاهل درجات `Final` الفارغة (NULL) عمدًا بدل إفساد المتوسط.
+
+المعالجة:
+1. حذف التكرارات
+2. تحويل `student_id`, `enrollment_year`, `total_courses`, `completed_courses`, `average_score` إلى أرقام
+3. تحويل `birth_date` إلى تاريخ
+4. توحيد `gender` من `M`/`F` إلى `Male`/`Female`
+5. معالجة المدينة `Sana'a` بعناية (تفادي تحويلها إلى `Sana'A`)
+
+**المخرج النهائي** (10 أعمدة):
+```
+student_id, full_name, gender, birth_date, city,
+enrollment_year, status, total_courses, completed_courses, average_score
+```
+
+---
+
+## 5. التشغيل
+
+### 5.1 المتطلبات
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+المتطلبات في `requirements.txt`:
+```
+pandas>=2.2
+psycopg2-binary>=2.9
+SQLAlchemy>=2.0
+python-dotenv>=1.0
+```
+
+### 5.2 إعداد الاتصال بقاعدة البيانات
+
+انسخ ملف النموذج ثم عدّله:
+```powershell
+Copy-Item .env.example .env
+```
+
+محتوى `.env`:
+```ini
+PGHOST=localhost
+PGPORT=5432
+PGDATABASE=advanced_sql_training_db
+PGUSER=postgres
+PGPASSWORD=postgres
+```
+
+> ⚠️ ملف `.env` **لا يُرفع** إلى Git (مُستثنى في `.gitignore`).
+> لا يوجد `.env`؟ القيم الافتراضية داخل `src/pipelines/sql/config.py` تعمل مباشرة.
+
+### 5.3 تشغيل خط واحد
+
+```powershell
+# خط CSV (لا يحتاج قاعدة بيانات)
+python src/pipelines/csv/pipeline.py
+
+# خط SQL (يحتاج قاعدة بيانات تعمل)
+python src/pipelines/sql/pipeline.py
+```
+
+### 5.4 تشغيل الخطين معًا
+
+```powershell
+python run_all.py
+```
+
+### 5.5 سجلات التنفيذ
+
+كل خط يكتب في سجله الخاص، فلا تختلط السجلات:
+
+| الخط | السجل |
+|------|-------|
+| CSV | `logs/pipeline_csv.log` |
+| SQL | `logs/pipeline_sql.log` |
+
+كل سجل يوثّق المراحل: `[read]` → `[schema]` → `[clean]` → `[validate]` → `[write]`.
+
+---
+
+## 6. استكشاف قاعدة البيانات مباشرة
+
+لتشغيل استعلامات SQL على نفس البيانات دون كتابة Python:
+
+```powershell
+psql -U postgres -h 127.0.0.1 -p 5432 -d advanced_sql_training_db
+```
+
+مثال — أعلى 5 طلاب بالمتوسط:
+```sql
+SELECT student_id, full_name, ROUND(AVG(score), 2) AS average_score
+FROM assessments
+WHERE score IS NOT NULL
+GROUP BY student_id, full_name
+ORDER BY average_score DESC
+LIMIT 5;
+```
+
+---
+
+## 7. التعامل مع الأخطاء
+
+| المشكلة | السبب | الحل |
+|---------|-------|------|
+| `ModuleNotFoundError: No module named 'dotenv'` | الحزمة غير مثبتة | `python -m pip install -r requirements.txt` |
+| `ModuleNotFoundError: No module named 'pandas'` | نفس المشكلة | نفس الحل |
+| `Connection refused` / `ping` فشل | خادم PostgreSQL متوقف | شغّل الخدمة، وتأكد من `PGHOST`/`PGPORT` |
+| `password authentication failed` | كلمة مرور خاطئة | صحّح `PGPASSWORD` في `.env` |
+| `database ... does not exist` | القاعدة غير موجودة | أنشئها أو غيّر `PGDATABASE` |
+| `Missing required columns: [...]` | تغيّرت بنية المصدر | راجع القسم 4 وحدّث القوائم في `src/common/schemas.py` |
+| `psycopg2` لا يعمل | بناء بايثون مختلف | استخدم `psycopg2-binary` دائمًا (وليس `psycopg2`) |
+
+**فحص سريع للاتصال:**
+```powershell
+psql -U postgres -h 127.0.0.1 -p 5432 -d advanced_sql_training_db -c "SELECT 1;"
+```
+
+---
+
+## 8. إضافة خط مصدر جديد
+
+البنية مصمّمة للتوسّع. لخط جديد أنشئ مجلدًا بنفس الأنماط:
+
+```
+src/pipelines/<اسم>/
+├── extractor.py     ← اقرأ من المصدر
+├── processor.py     ← عالج البيانات
+├── writer.py        ← اكتب النتيجة
+└── pipeline.py      ← نسّق المراحل
+```
+
+ثم أضف أعمدته إلى `src/common/schemas.py` وأدرج دالة التشغيل في `run_all.py`.
+
+---
+
+## 9. ملاحظات تقنية
+
+- **الأسرار:** تُقرأ من متغيرات البيئة فقط، ولا يوجد أي كلمة مرور داخل الكود.
+- **`pool_pre_ping=True`:** يضمن أن يعيد SQLAlchemy الاتصال تلقائيًا إذا سقطت قاعدة البيانات.
+- **الاستعلامات تُبنى عبر pandas/SQLAlchemy** مع قيم مُمرَّرة من ملفاتنا فقط، فلا مدخلات مستخدم خارجية.
+- **`.gitignore`** يستثني `*.md` و`.env` و`data/processed/` و`logs/` — فتُحفظ الأسرار والمخرجات خارج المستودع.
+
+---
+
+## 10. مراجع
+
+- [دليل الاتصال بـ PostgreSQL](POSTGRESQL_CONNECTION_GUIDE.md) — شرح مفصّل لإعداد الاتصال والمشكلات الشائعة
+- [دليل استخدام GitHub عبر SSH](GITHUB_SSH_PUSH_GUIDE.md) — إنشاء المفتاح والمصادقة والرفع
