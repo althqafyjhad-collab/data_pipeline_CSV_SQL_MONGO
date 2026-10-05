@@ -26,6 +26,10 @@ CSV_LOG_FILE = LOGS_DIR / "pipeline_csv.log"
 SQL_OUTPUT_FILE = PROCESSED_DIR / "students_sql_ml_ready.csv"
 SQL_LOG_FILE = LOGS_DIR / "pipeline_sql.log"
 
+# --- MongoDB pipeline paths -----------------------------------------
+MONGO_OUTPUT_FILE = PROCESSED_DIR / "students_mongo_ml_ready.csv"
+MONGO_LOG_FILE = LOGS_DIR / "pipeline_mongo.log"
+
 # --- Environment file -----------------------------------------------
 ENV_FILE = PROJECT_ROOT / ".env"
 ENV_EXAMPLE_FILE = PROJECT_ROOT / ".env.example"

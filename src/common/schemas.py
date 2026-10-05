@@ -58,6 +58,36 @@ SQL_DATE_COLUMNS: List[str] = ["birth_date"]
 
 SQL_TEXT_COLUMNS: List[str] = ["full_name", "city"]
 
+# =====================
+# MongoDB source schema
+# =====================
+# MongoDB documents expose the same fields as the CSV source.
+MONGO_REQUIRED_COLUMNS: List[str] = [
+    "student_id",
+    "name",
+    "age",
+    "gpa",
+    "attendance",
+    "city",
+]
+
+MONGO_NUMERIC_COLUMNS: List[str] = [
+    "student_id",
+    "age",
+    "gpa",
+    "attendance",
+]
+
+MONGO_TEXT_COLUMNS: List[str] = ["name", "city"]
+
+# Fields that exist in MongoDB but must not reach the CSV output.
+MONGO_INTERNAL_COLUMNS: List[str] = [
+    "_id",
+    "__v",
+    "createdAt",
+    "updatedAt",
+]
+
 
 # =====================
 # Generic validators

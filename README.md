@@ -7,15 +7,16 @@
 ## 1. نظرة عامة على المشروع
 
 المشروع يحوّل بيانات الطلاب إلى **مجموعات بيانات جاهزة لتعلّم الآلة (ML-Ready)**.
-المصدران مختلفان تمامًا، ولذلك فُصل كل مصدر في **خط معالجة مستقل**:
+المصادر مختلفة تمامًا، ولذلك فُصل كل مصدر في **خط معالجة مستقل**:
 
 | الخط | المصدر | عدد الصفوف | ملف الإخراج |
 |------|--------|-----------|-------------|
-| **CSV** | ملف `data/raw/students_raw.csv` | 8 | `data/processed/students_ml_ready.csv` |
-| **SQL** | PostgreSQL `advanced_sql_training_db` | 15 | `data/processed/students_sql_ml_ready.csv` |
+| **CSV** | ملف `data/raw/students_raw.csv` | 100 | `data/processed/students_ml_ready.csv` |
+| **SQL** | PostgreSQL `advanced_sql_training_db` | 100 | `data/processed/students_sql_ml_ready.csv` |
+| **MongoDB** | MongoDB `student_db.students` | 100 | `data/processed/students_mongo_ml_ready.csv` |
 
 **لماذا الفصل؟**
-- المصدران لهما **أعمدة مختلفة تمامًا**؛ فرض نسخة واحدة عليهما ينتج كودًا هشًّا.
+- المصادر لها **بنى مختلفة**؛ فرض نسخة واحدة عليها ينتج كودًا هشًّا.
 - كل خط يعمل ويفشل بشكل مستقل دون التأثير على الآخر.
 - فصل القراءة عن المعالجة عن الإخراج يجعل كل وحدة **قابلة للاختبار وحدها**.
 
@@ -25,7 +26,7 @@
 
 ```
 student_data_pipeline/
-├── run_all.py                     ← تشغيل الخطين بأمر واحد
+├── run_all.py                     ← تشغيل كل الخطوط بأمر واحد
 ├── requirements.txt
 ├── .env.example                   ← نموذج متغيرات البيئة
 ├── data/
@@ -34,21 +35,32 @@ student_data_pipeline/
 │   └── processed/                 ← المخرجات (git-ignored)
 ├── logs/                          ← سجل مستقل لكل خط
 └── src/
-    ├── common/                    ← وحدات مشتركة بين الخطين
+    ├── common/                    ← وحدات مشتركة بين كل الخطوط
     │   ├── paths.py               ← كل المسارات في مكان واحد
     │   ├── logging_setup.py       ← إعداد السجل
-    │   └── schemas.py             ← قواعد التحقق لكل مصدر
+    │   ├── schemas.py             ← قواعد التحقق لكل مصدر
+    │   ├── display.py             ← عرض البيانات في الكونسول
+    │   └── sample_data.py         ← مولّد بيانات عشوائية (~100 طالب)
     └── pipelines/
         ├── csv/
         │   ├── extractor.py       ← [قراءة] من CSV فقط
         │   ├── processor.py       ← [معالجة] تنظيف وتحويل وتحقق
         │   ├── writer.py          ← [إخراج] حفظ في CSV فقط
+        │   ├── seed.py            ← تعبئة ملف CSV ببيانات عشوائية
         │   └── pipeline.py        ← تنسيق المراحل الثلاث
-        └── sql/
-            ├── config.py          ← إعدادات الاتصال
-            ├── extractor.py       ← [قراءة] من PostgreSQL فقط
+        ├── sql/
+        │   ├── config.py          ← إعدادات الاتصال
+        │   ├── extractor.py       ← [قراءة] من PostgreSQL فقط
+        │   ├── processor.py       ← [معالجة]
+        │   ├── writer.py          ← [إخراج]
+        │   ├── seed.py            ← تعبئة القاعدة ببيانات عشوائية
+        │   └── pipeline.py        ← تنسيق المراحل الثلاث
+        └── mongo/
+            ├── config.py          ← إعدادات اتصال MongoDB
+            ├── extractor.py       ← [قراءة] من MongoDB فقط (pymongo)
             ├── processor.py       ← [معالجة]
             ├── writer.py          ← [إخراج]
+            ├── seed.py            ← تعبئة المجموعة ببيانات عشوائية
             └── pipeline.py        ← تنسيق المراحل الثلاث
 ```
 
@@ -154,10 +166,18 @@ PGPORT=5432
 PGDATABASE=advanced_sql_training_db
 PGUSER=postgres
 PGPASSWORD=postgres
+
+MONGO_HOST=localhost
+MONGO_PORT=27017
+MONGO_DATABASE=student_db
+MONGO_COLLECTION=students
+# اتركهما فارغين إذا كان الخادم بلا مصادقة
+MONGO_USER=
+MONGO_PASSWORD=
 ```
 
 > ⚠️ ملف `.env` **لا يُرفع** إلى Git (مُستثنى في `.gitignore`).
-> لا يوجد `.env`؟ القيم الافتراضية داخل `src/pipelines/sql/config.py` تعمل مباشرة.
+> لا يوجد `.env`؟ القيم الافتراضية داخل `config.py` لكل خط تعمل مباشرة.
 
 ### 5.3 تشغيل خط واحد
 
@@ -167,15 +187,105 @@ python src/pipelines/csv/pipeline.py
 
 # خط SQL (يحتاج قاعدة بيانات تعمل)
 python src/pipelines/sql/pipeline.py
+
+# خط MongoDB (يحتاج MongoDB يعمل)
+python src/pipelines/mongo/pipeline.py
 ```
 
-### 5.4 تشغيل الخطين معًا
+### 5.4 تشغيل كل الخطوط معًا
 
 ```powershell
 python run_all.py
 ```
 
-### 5.5 سجلات التنفيذ
+### 5.5 عرض البيانات في الكونسول (`--verbose`)
+
+أضف `--verbose` لعرض المدخلات والمخرجات مباشرة في الكونسول:
+
+```powershell
+# خط واحد فقط
+python src/pipelines/csv/pipeline.py --verbose
+python src/pipelines/sql/pipeline.py --verbose
+python src/pipelines/mongo/pipeline.py --verbose
+
+# كل الخطوط معًا
+python run_all.py --verbose
+```
+
+**مثال من وضع `--verbose` لخط CSV:**
+
+```
+============================================================
+CSV PIPELINE
+============================================================
+input : ...\data\raw\students_raw.csv
+output: ...\data\processed\students_ml_ready.csv
+
+--- INPUT (raw file) ---
+rows: 103 | columns: 6
+   student_id           name  age  gpa  attendance    city
+0        1001      Ahmed Ali   22  3.5        92.0   Sanaa
+1        1002  Sara Mohammed   21  3.8        96.0   Sanaa
+2        1003  Khaled Hassan   23  NaN        88.0  Dhamar
+3        1004     Mona Saleh   20  4.2        94.0     Ibb
+4        1005     Ali Ahmed   -5  2.9        75.0    Taiz
+
+--- AFTER TYPE CONVERSION ---
+rows: 103 | columns: 6
+   (same data, now all numeric columns cast)
+
+--- AFTER CLEANING ---
+rows: 100 | columns: 6
+   student_id           name   age   gpa  attendance    city
+0        1001      Ahmed Ali  22.0  3.50        92.0   Sanaa
+1        1002  Sara Mohammed  21.0  3.80        96.0   Sanaa
+2        1003  Khaled Hassan  23.0  2.91        88.0  Dhamar
+3        1004     Mona Saleh  20.0  2.91        94.0     Ibb
+4        1005     Ali Ahmed  22.0  2.90        75.0    Taiz
+
+============================================================
+CSV PIPELINE RESULT
+============================================================
+rows written: 100
+saved to    : ...\data\processed\students_ml_ready.csv
+```
+
+**ما يعرضه `--verbose`:** كل خطوة على حدة:
+- `INPUT` — البيانات الخام كما قُرئت من المصدر
+- `AFTER TYPE CONVERSION` — بعد تحويل الأنواع
+- `AFTER CLEANING` — بعد إزالة التكرارات وتصحيح القيم
+- `AFTER DROPPING INTERNAL FIELDS` (MongoDB فقط) — بعد إسقاط `_id`, `__v`, التواريخ
+- `RESULT` — ملخص نهائي (عدد الصفوف + المسار)
+
+**للتحكم في عدد الصفوف المعروضة:** عدّل `PREVIEW_ROWS` في `src/common/display.py`.
+
+### 5.6 تعبئة البيانات (~100 طالب)
+
+كل مصدر فيه سكربت تعبئة مستقل يضيف بيانات عشوائية حقيقية إلى المصدر
+(المولّد في `src/common/sample_data.py` ببذرة ثابتة، فتُنتج نفس البيانات في كل تشغيل):
+
+```powershell
+# CSV: ينتج 103 صفوف (~100 + 3 تكرارات لاختبار التنظيف)
+python src/pipelines/csv/seed.py
+
+# PostgreSQL: يضيف طلابًا وتسجيلات وتقييمات
+python src/pipelines/sql/seed.py
+
+# MongoDB: يضيف مستندات إلى student_db.students
+python src/pipelines/mongo/seed.py
+```
+
+السكربتات **لا تفرض عددًا صارمًا**: تضيف فقط ما ينقص للوصول إلى ~100 طالب،
+فهي آمنة لإعادة التشغيل. الترقيم يبدأ من `max(student_id) + 1` في كل مصدر،
+والتسجيلات والتقييمات تُولّد بأرقام طلاب موجودة فعلًا لتفادي أي orphan.
+
+| المصدر | بعد التعبئة | ملاحظات |
+|--------|-------------|---------|
+| CSV | 100 صف نظيف | 103 خام − 3 تكرارات |
+| PostgreSQL | 100 طالب، 8 مواد، 388 تسجيل، 1164 تقييم | 17 درجة NULL مقصودة لاختبار التحقق |
+| MongoDB | 100 مستند | 6 حقول بعد التنظيف |
+
+### 5.7 سجلات التنفيذ
 
 كل خط يكتب في سجله الخاص، فلا تختلط السجلات:
 
@@ -183,14 +293,15 @@ python run_all.py
 |------|-------|
 | CSV | `logs/pipeline_csv.log` |
 | SQL | `logs/pipeline_sql.log` |
+| MongoDB | `logs/pipeline_mongo.log` |
 
 كل سجل يوثّق المراحل: `[read]` → `[schema]` → `[clean]` → `[validate]` → `[write]`.
 
 ---
 
-## 6. استكشاف قاعدة البيانات مباشرة
+## 6. استكشاف قواعد البيانات مباشرة
 
-لتشغيل استعلامات SQL على نفس البيانات دون كتابة Python:
+### PostgreSQL
 
 ```powershell
 psql -U postgres -h 127.0.0.1 -p 5432 -d advanced_sql_training_db
@@ -206,6 +317,45 @@ ORDER BY average_score DESC
 LIMIT 5;
 ```
 
+### MongoDB
+
+> `mongosh` غير مثبّت على هذا الجهاز (يوجد `mongod.exe` فقط)، فاستخدم Python عبر pymongo:
+
+```powershell
+python -c "from pipelines.mongo.extractor import get_collection; c=get_collection(); print('total:', c.count_documents({}))"
+```
+
+أو افتح صدفة تفاعلية:
+```powershell
+python
+```
+```python
+from pipelines.mongo.extractor import get_collection
+
+collection = get_collection()
+print("total:", collection.count_documents({}))              # 100
+print("with gpa >= 3:", collection.count_documents({"gpa": {"$gte": 3}}))  # 42
+
+for doc in collection.find({}, {"_id": 0, "name": 1}).limit(5):
+    print(doc)
+```
+
+استعلامات مفيدة عبر `extractor.py`:
+```python
+from pipelines.mongo.extractor import extract_students
+
+# كل الطلاب بمعدل 3 فأكثر
+high_achievers = extract_students(query={"gpa": {"$gte": 3}})
+
+# فقط حقول الاسم والمدينة
+names = extract_students(projection={"name": 1, "city": 1})
+```
+
+تعبئة المجموعة ببيانات عشوائية (~100 طالب):
+```powershell
+python src/pipelines/mongo/seed.py
+```
+
 ---
 
 ## 7. التعامل مع الأخطاء
@@ -213,7 +363,10 @@ LIMIT 5;
 | المشكلة | السبب | الحل |
 |---------|-------|------|
 | `ModuleNotFoundError: No module named 'dotenv'` | الحزمة غير مثبتة | `python -m pip install -r requirements.txt` |
+| `ModuleNotFoundError: No module named 'pymongo'` | مكتبة MongoDB غير مثبتة | `python -m pip install pymongo` |
 | `ModuleNotFoundError: No module named 'pandas'` | نفس المشكلة | نفس الحل |
+| `MongoDB is unreachable` | خدمة MongoDB متوقفة | `Get-Service MongoDB` ثم `Start-Service MongoDB` |
+| `ServerSelectionTimeoutError` | المنفذ 27017 محجوب أو إعدادات خاطئة | تحقق من `MONGO_HOST`/`MONGO_PORT` |
 | `Connection refused` / `ping` فشل | خادم PostgreSQL متوقف | شغّل الخدمة، وتأكد من `PGHOST`/`PGPORT` |
 | `password authentication failed` | كلمة مرور خاطئة | صحّح `PGPASSWORD` في `.env` |
 | `database ... does not exist` | القاعدة غير موجودة | أنشئها أو غيّر `PGDATABASE` |
@@ -222,7 +375,11 @@ LIMIT 5;
 
 **فحص سريع للاتصال:**
 ```powershell
+# PostgreSQL
 psql -U postgres -h 127.0.0.1 -p 5432 -d advanced_sql_training_db -c "SELECT 1;"
+
+# MongoDB (عبر pymongo)
+python -c "from pipelines.mongo.extractor import ping; print('mongo ok' if ping() else 'mongo down')"
 ```
 
 ---
