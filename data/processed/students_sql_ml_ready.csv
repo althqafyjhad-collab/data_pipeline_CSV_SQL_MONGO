@@ -1,0 +1,101 @@
+student_id,full_name,gender,birth_date,city,enrollment_year,status,total_courses,completed_courses,average_score
+1,Ali Mohammed Ahmed,Male,2003-03-15,Sana'a,2023.0,Active,4,3,79.45
+2,Sara Ahmed Ali,Female,2004-07-21,Sana'a,2023.0,Active,4,3,81.27
+3,Omar Hassan Saleh,Male,2002-11-10,Dhamar,2022.0,Active,4,4,64.75
+4,Noor Abdullah Ahmed,Female,2004-01-19,Dhamar,2023.0,Active,4,4,71.75
+5,Khaled Mohammed Ali,Male,2003-08-11,Ibb,2023.0,Active,3,3,76.25
+6,Maryam Hassan Ahmed,Female,2002-05-27,Ibb,2022.0,Active,3,3,79.0
+7,Yousef Ali Saleh,Male,2004-09-03,Taiz,2023.0,Active,3,3,62.0
+8,Reem Mohammed Hassan,Female,2003-12-13,Taiz,2023.0,Active,3,2,69.38
+9,Ahmed Abdullah Saleh,Male,2002-02-08,Hodeidah,2022.0,Active,3,3,64.0
+10,Lina Mohammed Ahmed,Female,2004-06-17,Hodeidah,2023.0,Active,3,3,72.0
+11,Fahd Hassan Mohammed,Male,2003-10-29,Sana'a,2023.0,Active,4,3,75.82
+12,Huda Ali Abdullah,Female,2004-04-04,Dhamar,2023.0,Active,2,2,60.0
+13,Mazen Saleh Ahmed,Male,2002-09-22,Ibb,2022.0,Active,3,3,74.67
+14,Salma Mohammed Hassan,Female,2003-01-14,Taiz,2023.0,Active,3,2,81.0
+15,Waleed Abdullah Ali,Male,2004-03-30,Sana'a,2023.0,Active,2,2,87.5
+16,Aisha Ahmed,Male,2002-02-23,Sana'a,2024.0,Active,4,2,73.75
+17,Sara Mohammed,Male,2001-03-02,Dhamar,2023.0,Graduated,4,1,70.08
+18,Bilal Mohammed,Male,2000-04-21,Mukalla,2024.0,Graduated,4,2,70.83
+19,Noor Al-Hakimi,Male,1998-12-26,Dhamar,2024.0,Active,4,2,72.45
+20,Maryam Al-Yemeni,Male,2004-02-24,Dhamar,2022.0,Active,4,3,72.83
+21,Younes Ahmed,Male,2002-07-18,Taiz,2023.0,Active,4,2,67.0
+22,Sara Hassan,Male,2003-06-24,Hodeidah,2025.0,Graduated,4,1,70.75
+23,Aisha Hassan,Female,2001-09-27,Ibb,2024.0,Suspended,4,3,75.82
+24,Omar Mohammed,Female,2005-07-13,Mukalla,2022.0,Graduated,4,3,77.0
+25,Bilal Al-Hakimi,Male,2004-08-19,Hodeidah,2024.0,Graduated,4,2,78.67
+26,Reem Abdullah,Male,2004-01-18,Dhamar,2023.0,Active,4,4,71.33
+27,Lina Ahmed,Male,1998-02-27,Sana'a,2022.0,Graduated,4,3,68.83
+28,Ahmed Al-Yemeni,Male,2002-06-17,Hodeidah,2022.0,Active,4,3,70.83
+29,Omar Saleh,Female,2004-03-22,Taiz,2024.0,Active,4,2,70.83
+30,Mazen Al-Sabri,Male,2001-03-17,Sana'a,2022.0,Active,4,3,69.18
+31,Aisha Abdullah,Male,1999-10-05,Dhamar,2025.0,Active,4,2,75.75
+32,Aisha Al-Hakimi,Male,1998-10-08,Aden,2025.0,Suspended,4,3,75.92
+33,Mazen Hassan,Female,2002-10-04,Ibb,2023.0,Graduated,4,3,69.58
+34,Younes Abdullah,Male,2004-07-01,Ibb,2025.0,Active,4,2,65.25
+35,Bilal Al-Ariqi,Female,2000-09-05,Dhamar,2024.0,Graduated,4,3,73.75
+36,Younes Al-Sabri,Female,2004-01-26,Ibb,2024.0,Active,4,2,73.25
+37,Ali Al-Yemeni,Male,1999-11-04,Ibb,2024.0,Graduated,4,4,85.75
+38,Bilal Al-Yemeni,Female,2000-12-12,Aden,2023.0,Active,4,0,67.08
+39,Younes Al-Hakimi,Female,1998-02-11,Aden,2025.0,Active,4,3,61.0
+40,Fahd Ali,Male,1998-08-20,Sana'a,2023.0,Suspended,4,3,67.67
+41,Mazen Ahmed,Male,1999-07-12,Aden,2024.0,Graduated,4,2,71.75
+42,Sara Saleh,Female,1999-12-03,Hodeidah,2024.0,Active,4,4,75.0
+43,Yousef Al-Hakimi,Female,2004-08-14,Taiz,2023.0,Active,4,1,73.58
+44,Salma Abdullah,Male,2001-07-14,Aden,2025.0,Graduated,4,1,79.17
+45,Maryam Al-Hakimi,Male,2003-12-06,Taiz,2022.0,Active,4,2,76.0
+46,Dina Al-Ariqi,Female,2001-01-03,Ibb,2022.0,Active,4,3,71.25
+47,Maryam Abdullah,Female,2004-08-23,Sana'a,2023.0,Active,4,2,72.0
+48,Waleed Al-Ariqi,Male,2005-11-10,Aden,2024.0,Active,4,3,74.17
+49,Yousef Al-Ariqi,Male,2002-07-04,Hodeidah,2025.0,Active,4,2,71.08
+50,Noor Al-Yemeni,Female,2000-10-14,Dhamar,2023.0,Active,4,2,71.25
+51,Reem Ali,Male,2000-02-01,Ibb,2023.0,Active,4,2,69.5
+52,Maryam Hassan,Male,2000-08-17,Ibb,2025.0,Active,4,3,76.08
+53,Ahmed Saleh,Male,2000-06-05,Aden,2023.0,Graduated,4,1,69.58
+54,Dina Mohammed,Female,1999-02-16,Mukalla,2024.0,Graduated,4,3,76.0
+55,Fahd Saleh,Male,2005-08-22,Dhamar,2022.0,Active,4,2,66.42
+56,Waleed Al-Yemeni,Male,1999-01-06,Dhamar,2025.0,Active,4,3,70.42
+57,Maryam Hassan,Male,2004-07-02,Mukalla,2022.0,Active,4,1,78.83
+58,Sara Ahmed,Male,2002-04-04,Ibb,2025.0,Graduated,4,3,70.42
+59,Waleed Al-Sabri,Female,2000-10-15,Dhamar,2024.0,Graduated,4,2,74.91
+60,Waleed Hassan,Female,1998-07-09,Hodeidah,2022.0,Active,4,3,71.83
+61,Reem Ahmed,Male,2005-11-09,Sana'a,2023.0,Graduated,4,3,65.67
+62,Fahd Hassan,Male,1998-02-01,Sana'a,2023.0,Active,4,3,72.45
+63,Noor Al-Ariqi,Female,1999-06-26,Aden,2025.0,Graduated,4,3,77.83
+64,Fahd Al-Sabri,Male,2004-02-25,Mukalla,2022.0,Active,4,2,72.92
+65,Huda Saleh,Male,2000-02-16,Sana'a,2025.0,Suspended,4,4,75.17
+66,Lina Hassan,Female,2000-08-19,Aden,2022.0,Active,4,3,74.75
+67,Sara Al-Yemeni,Male,2003-03-05,Ibb,2022.0,Graduated,4,3,65.17
+68,Mazen Al-Yemeni,Male,2003-07-11,Sana'a,2025.0,Active,4,2,76.75
+69,Rana Al-Yemeni,Female,2000-10-17,Sana'a,2025.0,Active,4,3,74.83
+70,Aisha Ali,Female,2005-10-23,Aden,2023.0,Active,4,3,69.42
+71,Younes Hassan,Male,2004-08-06,Aden,2025.0,Active,4,2,78.82
+72,Noor Al-Hakimi,Female,2004-02-03,Mukalla,2022.0,Active,4,2,74.92
+73,Maryam Hassan,Male,2003-01-20,Mukalla,2022.0,Active,4,2,65.92
+74,Omar Al-Yemeni,Female,2005-11-09,Dhamar,2024.0,Suspended,4,2,64.08
+75,Salma Al-Sabri,Female,1998-07-02,Dhamar,2023.0,Active,4,3,72.0
+76,Lina Mohammed,Male,2003-01-01,Sana'a,2025.0,Suspended,4,3,78.83
+77,Yousef Al-Yemeni,Female,2000-05-02,Dhamar,2024.0,Active,4,2,75.08
+78,Sara Al-Ariqi,Female,2004-09-12,Ibb,2024.0,Active,4,3,72.25
+79,Younes Ali,Male,1998-11-23,Mukalla,2025.0,Graduated,4,3,75.64
+80,Reem Ahmed,Female,1998-07-19,Aden,2024.0,Active,4,2,72.25
+81,Salma Al-Ariqi,Male,2005-02-24,Taiz,2023.0,Graduated,4,3,80.75
+82,Yousef Al-Ariqi,Male,2005-06-17,Hodeidah,2023.0,Graduated,4,2,80.08
+83,Bilal Ahmed,Female,2000-03-18,Sana'a,2022.0,Active,4,2,69.92
+84,Waleed Mohammed,Male,2001-09-10,Ibb,2024.0,Active,4,2,78.5
+85,Salma Ali,Female,2001-07-24,Ibb,2025.0,Suspended,4,2,76.75
+86,Yousef Al-Sabri,Female,1998-06-06,Mukalla,2025.0,Active,4,2,76.08
+87,Mazen Ali,Male,2004-08-04,Sana'a,2022.0,Graduated,4,1,68.0
+88,Aisha Abdullah,Male,2004-11-14,Dhamar,2022.0,Active,4,2,73.5
+89,Rana Abdullah,Female,2000-09-24,Sana'a,2022.0,Suspended,4,4,68.25
+90,Fahd Al-Sabri,Male,1998-08-06,Ibb,2024.0,Active,4,3,77.25
+91,Ali Ali,Male,1999-09-26,Mukalla,2023.0,Active,4,2,62.5
+92,Rana Mohammed,Female,2001-03-11,Dhamar,2024.0,Graduated,4,3,76.25
+93,Salma Al-Sabri,Male,2002-10-20,Ibb,2024.0,Graduated,4,3,76.0
+94,Maryam Al-Ariqi,Female,1999-04-19,Ibb,2023.0,Suspended,4,3,70.25
+95,Omar Al-Ariqi,Male,1998-02-11,Taiz,2023.0,Graduated,4,3,72.67
+96,Rana Saleh,Female,2001-08-06,Mukalla,2024.0,Suspended,4,3,75.33
+97,Reem Al-Ariqi,Female,1999-04-11,Sana'a,2024.0,Active,4,4,66.27
+98,Bilal Hassan,Male,2000-10-21,Ibb,2025.0,Graduated,4,3,77.33
+99,Yousef Al-Hakimi,Male,2004-01-13,Dhamar,2025.0,Active,4,4,68.91
+100,Ali Al-Yemeni,Male,2001-12-21,Mukalla,2024.0,Graduated,4,3,66.83

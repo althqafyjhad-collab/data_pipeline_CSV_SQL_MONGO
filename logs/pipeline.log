@@ -1,0 +1,24 @@
+2026-09-19 17:54:46,438 | INFO | Pipeline started.
+2026-09-19 17:54:46,438 | INFO | Loading data from data\raw\students_raw.csv
+2026-09-19 17:54:46,455 | INFO | Loaded 8 rows and 6 columns
+2026-09-19 17:54:46,455 | INFO | Schema validation passed.
+2026-09-19 17:54:46,465 | ERROR | Pipeline failed: 'NoneType' object has no attribute 'drop_duplicates'
+2026-09-19 17:55:30,907 | INFO | Pipeline started.
+2026-09-19 17:55:30,907 | INFO | Loading data from data\raw\students_raw.csv
+2026-09-19 17:55:30,926 | INFO | Loaded 8 rows and 6 columns
+2026-09-19 17:55:30,926 | INFO | Schema validation passed.
+2026-09-19 17:55:30,935 | ERROR | Pipeline failed: 'NoneType' object is not subscriptable
+2026-09-19 17:56:54,475 | INFO | Pipeline started.
+2026-09-19 17:56:54,477 | INFO | Loading data from data\raw\students_raw.csv
+2026-09-19 17:56:54,493 | INFO | Loaded 8 rows and 6 columns
+2026-09-19 17:56:54,494 | INFO | Schema validation passed.
+2026-09-19 17:56:54,524 | INFO | After cleaning: 8 rows and 6 columns
+2026-09-19 17:56:54,528 | ERROR | Pipeline failed: Data validation errors:
+ - Invalid age values.
+2026-09-19 17:59:04,857 | INFO | Pipeline started.
+2026-09-19 17:59:04,857 | INFO | Loading data from data\raw\students_raw.csv
+2026-09-19 17:59:04,874 | INFO | Loaded 8 rows and 6 columns
+2026-09-19 17:59:04,876 | INFO | Schema validation passed.
+2026-09-19 17:59:04,898 | INFO | After cleaning: 8 rows and 6 columns
+2026-09-19 17:59:04,910 | INFO | Save process data to {WindowsPath('data/processed/students_ml_ready.csv')}
+2026-09-19 17:59:04,910 | INFO | Pipeline completed successfully.

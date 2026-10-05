@@ -1,0 +1,70 @@
+2026-10-05 15:31:49,274 | INFO | CSV pipeline started.
+2026-10-05 15:31:49,291 | INFO | [read] 8 rows x 6 columns from students_raw.csv
+2026-10-05 15:31:49,291 | INFO | [schema] validation passed.
+2026-10-05 15:31:49,326 | INFO | [clean] 8 rows x 6 columns after cleaning
+2026-10-05 15:31:49,329 | INFO | [validate] final data is valid.
+2026-10-05 15:31:49,334 | INFO | [write] 8 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 15:31:49,335 | INFO | CSV pipeline completed successfully.
+2026-10-05 15:36:06,824 | INFO | CSV pipeline started.
+2026-10-05 15:36:06,829 | INFO | [read] 8 rows x 6 columns from students_raw.csv
+2026-10-05 15:36:06,830 | INFO | [schema] validation passed.
+2026-10-05 15:36:06,839 | INFO | [clean] 8 rows x 6 columns after cleaning
+2026-10-05 15:36:06,840 | INFO | [validate] final data is valid.
+2026-10-05 15:36:06,844 | INFO | [write] 8 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 15:36:06,844 | INFO | CSV pipeline completed successfully.
+2026-10-05 15:37:55,030 | INFO | CSV pipeline started.
+2026-10-05 15:37:55,040 | INFO | [read] 8 rows x 6 columns from students_raw.csv
+2026-10-05 15:37:55,040 | INFO | [schema] validation passed.
+2026-10-05 15:37:55,052 | INFO | [clean] 8 rows x 6 columns after cleaning
+2026-10-05 15:37:55,054 | INFO | [validate] final data is valid.
+2026-10-05 15:37:55,058 | INFO | [write] 8 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 15:37:55,059 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:05:06,604 | INFO | CSV pipeline started.
+2026-10-05 16:05:06,615 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:05:06,616 | INFO | [schema] validation passed.
+2026-10-05 16:05:06,652 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:05:06,657 | INFO | [validate] final data is valid.
+2026-10-05 16:05:06,667 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:05:06,668 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:05:45,155 | INFO | CSV pipeline started.
+2026-10-05 16:05:45,162 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:05:45,163 | INFO | [schema] validation passed.
+2026-10-05 16:05:45,194 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:05:45,197 | INFO | [validate] final data is valid.
+2026-10-05 16:05:45,207 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:05:45,207 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:27:28,704 | INFO | CSV pipeline started.
+2026-10-05 16:27:28,711 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:27:28,712 | INFO | [schema] validation passed.
+2026-10-05 16:27:28,739 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:27:28,743 | INFO | [validate] final data is valid.
+2026-10-05 16:27:28,753 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:27:28,753 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:38:14,520 | INFO | CSV pipeline started.
+2026-10-05 16:38:14,522 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:38:14,526 | INFO | [schema] validation passed.
+2026-10-05 16:38:14,535 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:38:14,536 | INFO | [validate] final data is valid.
+2026-10-05 16:38:14,540 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:38:14,541 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:41:25,166 | INFO | CSV pipeline started.
+2026-10-05 16:41:25,169 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:41:25,174 | INFO | [schema] validation passed.
+2026-10-05 16:41:25,182 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:41:25,183 | INFO | [validate] final data is valid.
+2026-10-05 16:41:25,188 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:41:25,188 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:41:43,132 | INFO | CSV pipeline started.
+2026-10-05 16:41:43,135 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:41:43,135 | INFO | [schema] validation passed.
+2026-10-05 16:41:43,147 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:41:43,148 | INFO | [validate] final data is valid.
+2026-10-05 16:41:43,151 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:41:43,151 | INFO | CSV pipeline completed successfully.
+2026-10-05 16:52:59,067 | INFO | CSV pipeline started.
+2026-10-05 16:52:59,071 | INFO | [read] 103 rows x 6 columns from students_raw.csv
+2026-10-05 16:52:59,071 | INFO | [schema] validation passed.
+2026-10-05 16:52:59,084 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:52:59,086 | INFO | [validate] final data is valid.
+2026-10-05 16:52:59,089 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_ml_ready.csv
+2026-10-05 16:52:59,091 | INFO | CSV pipeline completed successfully.

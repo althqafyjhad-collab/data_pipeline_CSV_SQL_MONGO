@@ -1,0 +1,49 @@
+2026-10-05 15:57:59,802 | INFO | Mongo pipeline started.
+2026-10-05 15:57:59,839 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 15:57:59,840 | INFO | [schema] validation passed.
+2026-10-05 15:57:59,862 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 15:57:59,865 | INFO | [validate] final data is valid.
+2026-10-05 15:57:59,871 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 15:57:59,871 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:05:45,970 | INFO | Mongo pipeline started.
+2026-10-05 16:05:46,030 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:05:46,031 | INFO | [schema] validation passed.
+2026-10-05 16:05:46,062 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:05:46,066 | INFO | [validate] final data is valid.
+2026-10-05 16:05:46,075 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:05:46,076 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:27:29,502 | INFO | Mongo pipeline started.
+2026-10-05 16:27:29,549 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:27:29,549 | INFO | [schema] validation passed.
+2026-10-05 16:27:29,560 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:27:29,563 | INFO | [validate] final data is valid.
+2026-10-05 16:27:29,568 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:27:29,568 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:40:57,140 | INFO | Mongo pipeline started.
+2026-10-05 16:40:57,183 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:40:57,194 | INFO | [schema] validation passed.
+2026-10-05 16:40:57,214 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:40:57,216 | INFO | [validate] final data is valid.
+2026-10-05 16:40:57,226 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:40:57,226 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:41:25,384 | INFO | Mongo pipeline started.
+2026-10-05 16:41:25,409 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:41:25,413 | INFO | [schema] validation passed.
+2026-10-05 16:41:25,422 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:41:25,424 | INFO | [validate] final data is valid.
+2026-10-05 16:41:25,428 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:41:25,428 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:41:43,342 | INFO | Mongo pipeline started.
+2026-10-05 16:41:43,364 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:41:43,364 | INFO | [schema] validation passed.
+2026-10-05 16:41:43,369 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:41:43,370 | INFO | [validate] final data is valid.
+2026-10-05 16:41:43,372 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:41:43,372 | INFO | Mongo pipeline completed successfully.
+2026-10-05 16:52:59,497 | INFO | Mongo pipeline started.
+2026-10-05 16:52:59,534 | INFO | [read] 100 rows x 10 columns from student_db.students
+2026-10-05 16:52:59,534 | INFO | [schema] validation passed.
+2026-10-05 16:52:59,541 | INFO | [clean] 100 rows x 6 columns after cleaning
+2026-10-05 16:52:59,542 | INFO | [validate] final data is valid.
+2026-10-05 16:52:59,546 | INFO | [write] 100 rows saved to C:\Users\Brho_omy\Desktop\student_data_pipeline_SQLITE\student_data_pipeline\data\processed\students_mongo_ml_ready.csv
+2026-10-05 16:52:59,546 | INFO | Mongo pipeline completed successfully.

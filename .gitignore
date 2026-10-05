@@ -17,9 +17,8 @@ venv/
 # =====================
 # Generated / runtime data
 # =====================
-logs/
-*.log
-data/processed/
+# NOTE: logs/ and data/processed/ are tracked on purpose so the
+# run output and the produced datasets are visible in the repo.
 
 # =====================
 # OS / editor
